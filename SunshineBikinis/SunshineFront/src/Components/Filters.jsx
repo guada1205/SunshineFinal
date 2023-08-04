@@ -29,7 +29,7 @@ export function Filters() {
           type="range"
           id={minPriceFilterId}
           min="100"
-          max="2000"
+          max="20000"
           onChange={handleMinPriceChange}
           value={filters.minPrice}
         />
@@ -39,8 +39,8 @@ export function Filters() {
         <label htmlFor={categoryFilterId}>Categoría: </label>
         <select id={categoryFilterId} onChange={handleChangeCategory}>
           <option value="all">Todas</option>
-          <option value="Cafeteria">Bikinis</option>
-          <option value="Cafeteria">Trikinis</option>
+          <option value="Bikini">Bikini</option>
+          <option value="Trikini hermosa">Trikini</option>
         </select>
       </div>
     </section>
