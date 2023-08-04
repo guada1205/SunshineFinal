@@ -1,0 +1,25 @@
+.page-admin {
+  height: 100vh;
+}
+.page-admin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  justify-content: right;
+}
+
+.page-admin-container label {
+  margin: 20px 0 0 10px;
+}
+.page-admin-container button {
+  display: block;
+  width: 100px;
+  padding: 10px;
+  background-color: #e07a5f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+}

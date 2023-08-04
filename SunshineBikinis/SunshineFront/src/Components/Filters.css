@@ -1,0 +1,21 @@
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin: 20px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.filters > div {
+  display: flex;
+  gap: 1rem;
+}
+
+.precio {
+  font-size: 17px;
+}
+
+.minPrice {
+  margin-right: 30px;
+}
