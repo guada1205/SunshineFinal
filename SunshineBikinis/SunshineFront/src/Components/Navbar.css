@@ -1,0 +1,35 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+  position: sticky;
+  box-shadow: -1px 6px 31px 0px rgba(0, 0, 0, 0.1);
+  padding: 0 30px;
+}
+
+header div {
+  display: flex; /* Utilizamos flexbox */
+  align-items: center; /* Alineamos verticalmente los botones */
+  gap: 20px; /* Espacio entre los botones */
+}
+
+header img {
+  cursor: pointer;
+  height: 70px;
+  padding: 0;
+  margin: 0;
+}
+
+.Banner img {
+  height: auto;
+}
+
+.navBar-Button {
+  background-color: #e07a5f;
+  border-radius: 10px;
+  border-color: #e07a5f;
+  cursor: pointer;
+  padding: 6px;
+  transition: all 0.3s ease;
+}
