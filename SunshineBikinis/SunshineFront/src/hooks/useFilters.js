@@ -5,13 +5,12 @@ export function useFilters() {
   const { filters, setFilters, categorias} = useContext(FilterContext);
 
   const filterProducts = (products) => {
-    // return products.filter((product) => {
-    //     return (
-    //       product.precioVenta_Producto >= filters.minPrice &&  product.precioVenta_Producto <= filters.maxPrice &&
-    //       (filters.category === "all" || product.categoria_Producto === filters.category)
-    //     );
-    // });
+
     let filteredProducts = [...products];
+
+    filteredProducts = filteredProducts.filter(producto =>
+      producto.nombre_Producto.includes(filters.nombre)
+    );
 
     if (filters.orden === "asc") {
       filteredProducts.sort((a, b) =>

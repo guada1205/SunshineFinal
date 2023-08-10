@@ -9,6 +9,7 @@ export function Filters() {
   const categoryFilterId = useId();
   const maxPriceFilterId = useId();
   const ordenFilterId = useId();
+  const nombreFilterId = useId();
 
   const handleMinPriceChange = (event) => {
     setFilters((prevState) => ({
@@ -36,8 +37,24 @@ export function Filters() {
       orden: event.target.value,
     }));
   };
+
+  const handleNombreChaneg = (event) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      nombre: event.target.value,
+    }));
+  };
   return (
     <section className="filters">
+      <div className="nombre">
+        <label htmlFor={nombreFilterId}>Orden: </label>
+        <input
+          id={nombreFilterId}
+          type="text"
+          value={filters.nombre}
+          onChange={handleNombreChaneg}
+        ></input>
+      </div>
       <div className="minPrice">
         <label htmlFor={minPriceFilterId}>Precio Mínimo: </label>
         <input

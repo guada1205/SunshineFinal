@@ -3,11 +3,13 @@ import { useId } from "react";
 import { useCart } from "../hooks/useCart";
 import { CartItem } from "./CartItem";
 import { Link } from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
 import "./Cart.css";
 
 export function Cart() {
   const cartCheckboxId = useId();
   const { cart, clearCart, addToCart, removeOneFromCart } = useCart();
+  const { user } = useLogin();
 
   return (
     <div>
@@ -21,8 +23,8 @@ export function Cart() {
           {cart.map((product) => (
             <CartItem
               key={product.idProducto}
-              addToCart={() => addToCart(product)}
-              removeOneFromCart={() => removeOneFromCart(product)}
+              addToCart={() => addToCart(product, user)}
+              removeOneFromCart={() => removeOneFromCart(product, user)}
               {...product}
             />
           ))}

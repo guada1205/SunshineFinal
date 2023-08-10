@@ -8,6 +8,7 @@ export function FiltersProvider({ children }) {
     orden: "asc",
     minPrice: 100,
     maxPrice: 20000,
+    nombre: "",
   });
   const categorias = ["Bikinis", "Trikinis", "Enterizas", "Vintage"];
   return (

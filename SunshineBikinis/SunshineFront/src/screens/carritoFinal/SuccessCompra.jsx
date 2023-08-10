@@ -5,13 +5,12 @@ import Navbar from "../../Components/Navbar";
 import { Footer } from "../../Components/Footer";
 import axios from "axios";
 import "./SuccessCompra.css";
+import { useLogin } from "../../hooks/useLogin";
 const SuccessCompra = () => {
   const navigate = useNavigate();
+  const { user } = useLogin();
   const { id } = useParams();
-  const [idCompra, setIdCompra] = useState();
-  const [Total, setTotal] = useState();
-  const [estado, setEstado] = useState();
-  const [fecha, setFecha] = useState();
+  const [compra, setCompra] = useState([]);
   const [detalleCompra, setDetalleCompra] = useState([]);
 
   useEffect(() => {
@@ -19,11 +18,7 @@ const SuccessCompra = () => {
       const { data } = await axios.get(
         `http://127.0.0.1:3000/api/compras/${id}`
       );
-      setIdCompra(data[0].idCompra);
-      setTotal(data[0].montoTotal);
-      setEstado(data[0].estado);
-      setFecha(data[0].fechaEnvio);
-
+      setCompra(data[0]);
       getDataDetalleById();
     };
 
@@ -33,53 +28,78 @@ const SuccessCompra = () => {
       );
       setDetalleCompra(data);
     };
-
     getDataById();
+    console.log(compra);
+    console.log(detalleCompra);
+    console.log(user);
   }, [id]);
 
   return (
-    <div>
-      <Navbar></Navbar>
-      <div className="successcompra-container">
-        <h2>Para completar su pedido, transfiera el Monto Toal al alias: </h2>
-        <h3>guadalupe.almada.mp</h3>
-        <small>Nos contactaremos con ud. a la brevedad</small>
-        <br />
-        <br />
+    <>
+      {Object.keys(user).length !== 0 && user.idUsuario === compra.idUsuario ? (
+        <div>
+          <Navbar></Navbar>
+          <div className="successcompra-container">
+            <h2>
+              Para completar la compra, realizar la transferencia al siguiente
+              alias:{" "}
+            </h2>
+            <h3>guadalupe.almada.mp</h3>
+            <small>Nos contactaremos con ud. a la brevedad</small>
+            <br />
+            <br />
+            <h4>Datos Personales:</h4>
+            <p>
+              Nombre: {user.Nombre_Usuario} {user.Apellido_Usuario}
+            </p>
+            <p>Email: {user.Email_Usuario}</p>
+            <p>Telefono: {user.numContacto_Usuario}</p>
+            <p>Direccion: {user.Domicilio_Usuario}</p>
+            <br />
+            <h4>Datos de su pedido:</h4>
 
-        <h4>Datos de su pedido:</h4>
+            <p>Numero de compra: {compra.idCompra}</p>
+            <p>Total: ${compra.montoTotal}</p>
+            <p>Estado: {compra.estado ? "Entregado" : "En Proceso"}</p>
+            <p>Fecha aproximada de envío: {compra.fechaEnvio}</p>
+            <br />
+            <h4>Detalle de su pedido: </h4>
 
-        <p>Numero de compra: {idCompra}</p>
-        <p>Total: ${Total}</p>
-        <p>Estado: {estado ? "Entregado" : "En Proceso"}</p>
-        <p>Fecha aproximada de envío: {fecha}</p>
+            <ul>
+              {detalleCompra.map((product, index) => {
+                return (
+                  <li key={index} className="products-list-item-successcompra">
+                    <div>
+                      Producto: <strong>{product.nombre_Producto}</strong> - $
+                      {product.SubTotal}
+                      <br />
+                      <strong>
+                        Cantidad: {product.cantidad} - Total: $
+                        {product.precioTotal}
+                      </strong>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
 
-        <h4>Detalle de su pedido: </h4>
+            <br />
+            <strong>Datos de contacto:</strong>
+            <p>WhatsApp: 1165673641</p>
+            <p>Email: contacto@sunshine.com</p>
 
-        <ul>
-          {detalleCompra.map((product) => {
-            return (
-              <li
-                key={product.idProducto}
-                className="products-list-item-successcompra"
-              >
-                <div>
-                  Producto: <strong>{product.idProducto}</strong> - $
-                  {product.SubTotal}
-                  <br />
-                  <strong>
-                    Cantidad: {product.cantidad} - Total: ${product.precioTotal}
-                  </strong>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-
-        <button onClick={() => navigate("/")}>Volver al inicio</button>
-      </div>
-      <Footer />
-    </div>
+            <button onClick={() => navigate("/")}>Volver al inicio</button>
+          </div>
+          <Footer />
+        </div>
+      ) : (
+        <div>
+          <Navbar></Navbar>
+          <h1>Ud. no tiene el usuario requerido</h1>
+          <Footer />
+        </div>
+      )}
+    </>
   );
 };
 

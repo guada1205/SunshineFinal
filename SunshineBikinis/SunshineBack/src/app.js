@@ -3,6 +3,7 @@ import productRoutes from "./routes/productos.routes.js"
 import indexRoutes from "./routes/index.routes.js"
 import compraRoutes from "./routes/compras.routes.js"
 import userRoutes from "./routes/users.routes.js"
+import carritoRoutes from "./routes/carrito.routes.js"
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
@@ -17,6 +18,7 @@ app.use(indexRoutes)
 app.use('/api', productRoutes)
 app.use('/api', compraRoutes)
 app.use('/api', userRoutes)
+app.use('/api', carritoRoutes)
 
 //static images folder
 app.use('/images', express.static('./images'))

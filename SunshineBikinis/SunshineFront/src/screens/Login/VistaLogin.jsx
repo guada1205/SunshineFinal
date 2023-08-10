@@ -1,16 +1,17 @@
 import { useLogin } from "../../hooks/useLogin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./VistaLogin.css";
 import Navbar from "../../Components/Navbar";
 import { Footer } from "../../Components/Footer";
 import { ToastContainer, toast } from "react-toastify";
+import { useCart } from "../../hooks/useCart";
 import "react-toastify/dist/ReactToastify.css";
 
 const VistaLogin = () => {
   const { user, loginUser, logoutUser } = useLogin();
-
+  const { cart, clearCart, loadCart } = useCart();
   const [email, setEmail] = useState("");
   const [contrasena, setContrasena] = useState("");
 
@@ -55,6 +56,7 @@ const VistaLogin = () => {
 
   const handleLogout = () => {
     logoutUser();
+    clearCart();
     navigate("/productos");
   };
 

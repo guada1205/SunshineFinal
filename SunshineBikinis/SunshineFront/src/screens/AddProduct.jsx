@@ -4,9 +4,11 @@ import axios from "axios";
 import "./addProduct.css";
 import { Link } from "react-router-dom";
 import { useFilters } from "../hooks/useFilters";
+import { useLogin } from "../hooks/useLogin";
 
 const AddProduct = () => {
   const { categorias } = useFilters();
+  const { user } = useLogin();
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [precioCompra, setPrecioCompra] = useState(0);
@@ -14,7 +16,6 @@ const AddProduct = () => {
   const [codigo, setCodigo] = useState("");
   const [stock, setStock] = useState(0);
   const [thumbnail, setThumbnail] = useState(); // Usamos un estado para la imagen
-
   const [categoria, setCategoria] = useState("");
 
   const navigate = useNavigate();
@@ -71,72 +72,79 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="form-container">
-      <div className="product-detail-header">
-        <Link to="/MainAdminPage" className="oButton">
-          Volver
-        </Link>
-      </div>
+    <>
+      {Object.keys(user).length !== 0 &&
+      user.Nombre_Permiso === "Administrador" ? (
+        <div className="form-container">
+          <div className="product-detail-header">
+            <Link to="/MainAdminPage" className="oButton">
+              Volver
+            </Link>
+          </div>
 
-      <form onSubmit={handleSubmit} className="form">
-        <h1>Agregar Producto</h1>
-        <label>
-          Codigo:
-          <input type="text" value={codigo} onChange={handleCodigoChange} />
-        </label>
+          <form onSubmit={handleSubmit} className="form">
+            <h1>Agregar Producto</h1>
+            <label>
+              Codigo:
+              <input type="text" value={codigo} onChange={handleCodigoChange} />
+            </label>
 
-        <label>
-          Nombre:
-          <input type="text" value={nombre} onChange={handleNombreChange} />
-        </label>
-        <label>
-          Descripción:
-          <input
-            type="text"
-            value={descripcion}
-            onChange={handleDescripcionChange}
-          />
-        </label>
-        <label>
-          Categoría:
-          <select value={categoria} onChange={handleCategoriaChange}>
-            <option value="">Seleccione una categoría</option>
-            {categorias.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Precio Compra:
-          <input
-            type="number"
-            value={precioCompra}
-            onChange={handlePrecioCompraChange}
-          />
-        </label>
-        <label>
-          Precio Venta:
-          <input
-            type="number"
-            value={precioVenta}
-            onChange={handlePrecioVentaChange}
-          />
-        </label>
+            <label>
+              Nombre:
+              <input type="text" value={nombre} onChange={handleNombreChange} />
+            </label>
+            <label>
+              Descripción:
+              <input
+                type="text"
+                value={descripcion}
+                onChange={handleDescripcionChange}
+              />
+            </label>
+            <label>
+              Categoría:
+              <select value={categoria} onChange={handleCategoriaChange}>
+                <option value="">Seleccione una categoría</option>
+                {categorias.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Precio Compra:
+              <input
+                type="number"
+                value={precioCompra}
+                onChange={handlePrecioCompraChange}
+              />
+            </label>
+            <label>
+              Precio Venta:
+              <input
+                type="number"
+                value={precioVenta}
+                onChange={handlePrecioVentaChange}
+              />
+            </label>
 
-        <label>
-          Stock:
-          <input type="number" value={stock} onChange={handleStockChange} />
-        </label>
+            <label>
+              Stock:
+              <input type="number" value={stock} onChange={handleStockChange} />
+            </label>
 
-        <label>
-          Imagen de Portada:
-          <input type="file" onChange={handleImagenChange} />
-        </label>
-        <button type="submit">Agregar Producto</button>
-      </form>
-    </div>
+            <label>
+              Imagen de Portada:
+              <input type="file" onChange={handleImagenChange} />
+            </label>
+            <button type="submit">Agregar Producto</button>
+          </form>
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 };
 

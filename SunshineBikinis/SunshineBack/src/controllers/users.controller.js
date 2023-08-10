@@ -83,9 +83,8 @@ export const registerUser = async (req, res) => {
   const { Nombre_Usuario, Apellido_Usuario, Email_Usuario, numContacto_Usuario, Contrasena_Usuario, Domicilio_Usuario, Permiso_Usuario } = req.body;
 
   try {
-    console.log(req.body);
-    const query = 'INSERT INTO usuario (Nombre_Usuario, Apellido_Usuario, Email_Usuario, numContacto_Usuario, Contrasena_Usuario, Domicilio_Usuario, Permiso_Usuario) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    const [rows] = await pool.query('INSERT INTO usuario (Nombre_Usuario, Apellido_Usuario, Email_Usuario, numContacto_Usuario, Contrasena_Usuario, Permiso_Usuario) VALUES (?, ?, ?, ?, ?, ?)', [Nombre_Usuario, Apellido_Usuario, Email_Usuario, numContacto_Usuario, Contrasena_Usuario, Domicilio_Usuario, Permiso_Usuario]);
+   
+    const [rows] = await pool.query('INSERT INTO usuario (Nombre_Usuario, Apellido_Usuario, Email_Usuario, numContacto_Usuario, Contrasena_Usuario, Domicilio_Usuario, Permiso_Usuario) VALUES (?, ?, ?, ?, ?, ?, ?)', [Nombre_Usuario, Apellido_Usuario, Email_Usuario, numContacto_Usuario, Contrasena_Usuario, Domicilio_Usuario, Permiso_Usuario]);
 
     if (rows.affectedRows < 1) {
       console.error('Error al registrar usuario');
@@ -95,7 +94,8 @@ export const registerUser = async (req, res) => {
     }
 
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al registrar usuario.  Asegúrese que el Email no esté en uso' });
+    // res.status(500).json({ mensaje: error});
+    console.log(error);
   }
 }
 

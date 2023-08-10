@@ -6,6 +6,7 @@ import "./addProduct.css";
 import { useFilters } from "../hooks/useFilters";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLogin } from "../hooks/useLogin";
 
 const EditProduct = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const EditProduct = () => {
   const [codigo, setCodigo] = useState("");
   const [stock, setStock] = useState(0);
   const [thumbnail, setThumbnail] = useState(); // Usamos un estado para la imagen
-
+  const { user } = useLogin();
   const { categorias } = useFilters();
   const [categoria, setCategoria] = useState("");
 
@@ -102,79 +103,86 @@ const EditProduct = () => {
   };
 
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit} className="form">
-        <h1>Editar producto</h1>
-        <label>
-          Codigo:
-          <input type="text" value={codigo} onChange={handleCodigoChange} />
-        </label>
+    <>
+      {Object.keys(user).length !== 0 &&
+      user.Nombre_Permiso === "Administrador" ? (
+        <div className="form-container">
+          <form onSubmit={handleSubmit} className="form">
+            <h1>Editar producto</h1>
+            <label>
+              Codigo:
+              <input type="text" value={codigo} onChange={handleCodigoChange} />
+            </label>
 
-        <label>
-          Nombre:
-          <input type="text" value={nombre} onChange={handleNombreChange} />
-        </label>
-        <label>
-          Descripción:
-          <input
-            type="text"
-            value={descripcion}
-            onChange={handleDescripcionChange}
-          />
-        </label>
-        <label>
-          Categoría:
-          <select value={categoria} onChange={handleCategoriaChange}>
-            <option value="">Seleccione una categoría</option>
-            {categorias.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Precio Compra:
-          <input
-            type="number"
-            value={precioCompra}
-            onChange={handlePrecioCompraChange}
-          />
-        </label>
-        <label>
-          Precio Venta:
-          <input
-            type="number"
-            value={precioVenta}
-            onChange={handlePrecioVentaChange}
-          />
-        </label>
+            <label>
+              Nombre:
+              <input type="text" value={nombre} onChange={handleNombreChange} />
+            </label>
+            <label>
+              Descripción:
+              <input
+                type="text"
+                value={descripcion}
+                onChange={handleDescripcionChange}
+              />
+            </label>
+            <label>
+              Categoría:
+              <select value={categoria} onChange={handleCategoriaChange}>
+                <option value="">Seleccione una categoría</option>
+                {categorias.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Precio Compra:
+              <input
+                type="number"
+                value={precioCompra}
+                onChange={handlePrecioCompraChange}
+              />
+            </label>
+            <label>
+              Precio Venta:
+              <input
+                type="number"
+                value={precioVenta}
+                onChange={handlePrecioVentaChange}
+              />
+            </label>
 
-        <label>
-          Stock:
-          <input type="number" value={stock} onChange={handleStockChange} />
-        </label>
+            <label>
+              Stock:
+              <input type="number" value={stock} onChange={handleStockChange} />
+            </label>
 
-        <label>
-          Imagen de Portada:
-          <input type="file" onChange={handleImagenChange} />
-        </label>
-        <button type="submit">Editar Producto</button>
-        <ToastContainer
-          position="top-left"
-          autoClose={2000}
-          limit={3}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
-      </form>
-    </div>
+            <label>
+              Imagen de Portada:
+              <input type="file" onChange={handleImagenChange} />
+            </label>
+            <button type="submit">Editar Producto</button>
+            <ToastContainer
+              position="top-left"
+              autoClose={2000}
+              limit={3}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+            />
+          </form>
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 };
 

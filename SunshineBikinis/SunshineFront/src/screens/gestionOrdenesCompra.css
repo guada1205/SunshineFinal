@@ -1,0 +1,28 @@
+.gestion-ordenes {
+  margin: 20px 50px 20px 50px;
+}
+
+.compra-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(800px, 1fr));
+  gap: 20px;
+}
+
+.compra-item {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.compra-item h2 {
+  margin-top: 0;
+}
+
+.compra-item h3 {
+  margin-top: 20px;
+}
+
+.detalle-item {
+  margin: 5px 0;
+}

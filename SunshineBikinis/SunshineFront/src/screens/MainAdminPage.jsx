@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./MainAdminPage.css";
+import { useLogin } from "../hooks/useLogin";
 
 const MainAdminPage = () => {
   const [idProducto, setIdProducto] = useState(0);
   const navigate = useNavigate();
-
+  const { user } = useLogin();
   const handleIdProductoChange = (event) => {
     if (event.target.value > 0) {
       setIdProducto(event.target.value);
@@ -26,27 +27,44 @@ const MainAdminPage = () => {
   };
 
   return (
-    <div className="page-admin">
-      <h1>Administrador de Productos</h1>
+    <>
+      {Object.keys(user).length !== 0 &&
+      user.Nombre_Permiso === "Administrador" ? (
+        <div className="page-admin">
+          <h1>Administrador de Productos</h1>
 
-      <div className="page-admin-container">
-        <button className="Button" onClick={() => navigate("/AddProductos")}>
-          Agregar Producto
-        </button>
+          <div className="page-admin-container">
+            <button
+              className="Button"
+              onClick={() => navigate("/AddProductos")}
+            >
+              Agregar Producto
+            </button>
 
-        <label>
-          Ingrese el id del producto a buscar:
-          <input
-            type="number"
-            placeholder="ID Producto"
-            onChange={handleIdProductoChange}
-          />
-        </label>
-        <button className="Button" onClick={() => handleSubmit()}>
-          Editar Producto
-        </button>
-      </div>
-    </div>
+            <label>
+              Ingrese el id del producto a buscar:
+              <input
+                type="number"
+                placeholder="ID Producto"
+                onChange={handleIdProductoChange}
+              />
+            </label>
+            <button className="Button" onClick={() => handleSubmit()}>
+              Editar Producto
+            </button>
+
+            <button
+              className="Button"
+              onClick={() => navigate("/gestionOrdenesCompras")}
+            >
+              Gestionar Ordenes de Compra
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 };
 

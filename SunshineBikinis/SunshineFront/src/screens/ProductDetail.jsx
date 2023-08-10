@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import "./productDetail.css";
 import axios from "axios";
+import { useLogin } from "../hooks/useLogin";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   //#region "props"
+  const { user } = useLogin();
   const [idProducto, setIdProducto] = useState();
   const [nombre, setNombre] = useState();
   const [descripcion, setDescripcion] = useState();
@@ -43,49 +45,56 @@ const ProductDetail = () => {
     navigate("/productos");
   };
   return (
-    <div className="product-detail-container">
-      <div className="product-detail-header">
-        <Link to="/MainAdminPage" className="oButton">
-          Volver
-        </Link>
-      </div>
+    <>
+      {Object.keys(user).length !== 0 &&
+      user.Nombre_Permiso === "Administrador" ? (
+        <div className="product-detail-container">
+          <div className="product-detail-header">
+            <Link to="/MainAdminPage" className="oButton">
+              Volver
+            </Link>
+          </div>
 
-      <div className="product-info">
-        <div>
-          <h1>Product Detail</h1>
-          <img src={thumbnail} alt={nombre} />
+          <div className="product-info">
+            <div>
+              <h1>Product Detail</h1>
+              <img src={thumbnail} alt={nombre} />
+            </div>
+            <label>Código:{codigo}</label>
+            <label>
+              Nombre:
+              <strong> {nombre}</strong>
+            </label>
+            <label>
+              Descripcion:
+              <strong>{descripcion}</strong>
+            </label>
+            <label>
+              Precio de Compra:
+              <strong>{precioCompra}</strong>
+            </label>
+            <label>
+              Precio de Venta:
+              <strong>{precioVenta}</strong>
+            </label>
+            <label>
+              Stock:
+              <strong> {stock}</strong>
+            </label>
+            <label>Fecha de Ingreso: {fecha}</label>
+          </div>
+          <Link className="oButton" to={`/productos/edit/${idProducto}`}>
+            Editar
+          </Link>
+
+          <button className="oButton" onClick={() => handleDelete(id)}>
+            Borrar
+          </button>
         </div>
-        <label>Código:{codigo}</label>
-        <label>
-          Nombre:
-          <strong> {nombre}</strong>
-        </label>
-        <label>
-          Descripcion:
-          <strong>{descripcion}</strong>
-        </label>
-        <label>
-          Precio de Compra:
-          <strong>{precioCompra}</strong>
-        </label>
-        <label>
-          Precio de Venta:
-          <strong>{precioVenta}</strong>
-        </label>
-        <label>
-          Stock:
-          <strong> {stock}</strong>
-        </label>
-        <label>Fecha de Ingreso: {fecha}</label>
-      </div>
-      <Link className="oButton" to={`/productos/edit/${idProducto}`}>
-        Editar
-      </Link>
-
-      <button className="oButton" onClick={() => handleDelete(id)}>
-        Borrar
-      </button>
-    </div>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 };
 

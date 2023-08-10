@@ -3,10 +3,12 @@ import { AddToCartIcon, RemoveFromCartIcon } from "./Icons.jsx";
 import { useCart } from "../hooks/useCart";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useLogin } from "../hooks/useLogin";
 import "react-toastify/dist/ReactToastify.css";
 
 export function Products({ products }) {
   const { cart, removeFromCart, addToCart } = useCart();
+  const { user } = useLogin();
 
   const checkProductInCart = (product) => {
     return cart.some((item) => item.idProducto === product.idProducto);
@@ -25,7 +27,7 @@ export function Products({ products }) {
           progress: undefined,
           theme: "colored",
         });
-        removeFromCart(product);
+        removeFromCart(product, user);
         break;
       case "addToCart":
         toast.success(`Producto agregado al carrito`, {
@@ -38,7 +40,7 @@ export function Products({ products }) {
           progress: 0,
           theme: "colored",
         });
-        addToCart(product);
+        addToCart(product, user);
         break;
     }
   };

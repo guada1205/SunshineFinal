@@ -11,6 +11,7 @@ import VistaLogin from "./screens/Login/VistaLogin";
 import VistaRegistro from "./screens/Login/VistaRegistro";
 import SuccessRegister from "./screens/Login/SuccessRegister";
 import SuccessCompra from "./screens/carritoFinal/SuccessCompra";
+import GestionOrdenesCompra from "./screens/gestionOrdenesCompra";
 
 function App() {
   return (
@@ -40,6 +41,11 @@ function App() {
         ></Route>
         <Route exact path="/MainAdminPage" Component={MainAdminPage}></Route>
         <Route exact path="/CarritoCompras" Component={CarritoCompra}></Route>
+        <Route
+          exact
+          path="/gestionOrdenesCompras"
+          Component={GestionOrdenesCompra}
+        ></Route>
       </Routes>
     </Router>
   );

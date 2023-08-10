@@ -9,10 +9,12 @@ import { useFilters } from "../hooks/useFilters";
 import { useLogin } from "../hooks/useLogin";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
+import { useCart } from "../hooks/useCart";
 
 function MainPage() {
   const [productos, setProductos] = useState([]);
   const { user } = useLogin();
+  const { loadCart } = useCart();
   const { filterProducts } = useFilters();
   const filteredProducts = filterProducts(productos);
 
@@ -22,7 +24,10 @@ function MainPage() {
       setProductos(data);
     };
 
-    if (user.length > 0) {
+    console.log("user");
+    console.log(user);
+    if (Object.keys(user).length !== 0) {
+      loadCart(user);
     }
 
     getProductsData();
